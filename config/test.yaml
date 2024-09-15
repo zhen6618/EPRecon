@@ -1,0 +1,45 @@
+DATASET: 'scannet'
+BATCH_SIZE: 1
+SAVE_SCENE_MESH: True
+LOGDIR: './checkpoints'
+SAVE_FREQ: 1
+MODE: 'test'
+RESUME: True
+LOADCKPT: './weights/model_000007-init.ckpt'
+VIS_INCREMENTAL: False
+SAVE_INCREMENTAL: True
+
+TRAIN:
+  PATH: 'datasets/scannet'
+  EPOCHS: 991
+  N_VIEWS: 9
+  LR: 1e-3
+  N_WORKERS: 8
+  LREPOCHS: '12,24,48:2'
+
+TEST:
+  PATH: 'datasets/scannet'
+  N_VIEWS: 9
+  N_WORKERS: 4
+
+MODEL:
+  N_LAYER: 3
+  N_VOX: [96, 96, 96]
+  VOXEL_SIZE: 0.04
+  TRAIN_NUM_SAMPLE: [15000, 60000, 120000]
+  TEST_NUM_SAMPLE: [15000, 60000, 120000]
+
+  BACKBONE2D:
+    ARC: 'fpn-mnas-1'
+
+  FUSION:
+    FUSION_ON: True
+    HIDDEN_DIM: 64
+
+    AVERAGE: False
+    FULL: True
+
+  LW: [1.0, 0.8, 0.64, 0.8]
+
+  THRESHOLDS: [0, 0, 0]
+  POS_WEIGHT: 1.5

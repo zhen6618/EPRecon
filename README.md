@@ -12,6 +12,11 @@ cd torchsparse
 pip install tqdm
 pip install .
 
-
+git clone https://github.com/zhen6618/EPRecon.git
 cd EPRecon
+
+pip install -r requirements.txt
+pip install sparsehash
+pip install -U openmim
+mim install mmcv-full
 ```   

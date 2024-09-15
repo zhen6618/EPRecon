@@ -51,7 +51,7 @@ python main.py --cfg ./config/train.yaml
 python main.py --cfg ./config/test.yaml
 ```
 
-## Generate results for Evaluation
+## Generate Results for Evaluation
 ```
 python tools/generate_semantic_instance.py
 ```

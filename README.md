@@ -1,5 +1,6 @@
 ## EPRecon: An Efficient Framework for Real-Time Panoptic 3D Reconstruction from Monocular Video
 
+[demo video](https://github.com/zhen6618/EPRecon/blob/main/demo/demo.mp4)
 
 ## Installation
 ```

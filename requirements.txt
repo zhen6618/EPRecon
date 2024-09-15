@@ -1,0 +1,30 @@
+ipython
+Cython
+ray
+transforms3d
+tqdm
+opencv-python
+numba
+tensorboardX
+scikit-image
+trimesh
+yacs
+h5py
+loguru
+gdown # for downloading checkpoints
+pyrender
+pyglet
+open3d # for tsdf fusion in evaluation
+spconv-cu117  # CUDA11.7
+setuptools
+pillow
+wandb
+pyyaml
+matplotlib
+black
+imageio
+easydict
+numpy_indexed
+pyvista
+plyfile
+pycuda

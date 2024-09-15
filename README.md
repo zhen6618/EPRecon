@@ -22,3 +22,17 @@ pip install sparsehash
 pip install -U openmim
 mim install mmcv-full
 ```   
+
+## Dataset
+1. Data Preperation for ScanNet
+Download and extract ScanNet by following the instructions provided at http://www.scan-net.org/.
+
+2. Data preparation script
+For Geonetry Reconstruction:
+```
+# training/val split
+python tools/tsdf_fusion/generate_gt.py --data_path datasets/scannet/ --save_name all_tsdf_9 --window_size 9
+# test split
+python tools/tsdf_fusion/generate_gt.py --test --data_path datasets/scannet/ --save_name all_tsdf_9 --window_size 9
+```
+

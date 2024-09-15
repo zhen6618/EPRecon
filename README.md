@@ -58,6 +58,6 @@ python tools/generate_semantic_instance.py
 
 ## Citation
 ```
-Coming soon
+Coming soon...
 ```
 

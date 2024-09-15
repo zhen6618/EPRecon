@@ -31,7 +31,7 @@ mim install mmcv-full
 Download and extract ScanNet by following the instructions provided at http://www.scan-net.org/.
 Expected directory structure of ScanNet can refer to [NeuralRecon](https://github.com/zju3dv/NeuralRecon)
    
-For Geonetry Reconstruction:
+For Geometry Reconstruction:
 ```
 # training/val split
 python tools/tsdf_fusion/generate_gt.py --data_path datasets/scannet/ --save_name all_tsdf_9 --window_size 9

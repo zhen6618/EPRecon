@@ -41,3 +41,16 @@ python datasets/scannet/batch_load_scannet_data.py
 python datasets/scannet/label_interpolate.py
 ```
 
+## Training
+```
+python main.py --cfg ./config/train.yaml
+```
+
+## Testing
+```
+python main.py --cfg ./config/test.yaml
+```
+
+
+
+

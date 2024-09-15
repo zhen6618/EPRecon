@@ -11,11 +11,11 @@ trimesh
 yacs
 h5py
 loguru
-gdown # for downloading checkpoints
+gdown 
 pyrender
 pyglet
-open3d # for tsdf fusion in evaluation
-spconv-cu117  # CUDA11.7
+open3d 
+spconv-cu117  
 setuptools
 pillow
 wandb

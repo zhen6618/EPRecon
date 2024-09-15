@@ -4,7 +4,7 @@ from scipy.interpolate import NearestNDInterpolator
 import time
 
 def main():
-    root_path = 'datasets/scannet/all_tsdf_9_1'
+    root_path = 'datasets/scannet/all_tsdf_9'
     folder_names = [folder for folder in os.listdir(root_path) if os.path.isdir(os.path.join(root_path, folder))]
 
     count = 0

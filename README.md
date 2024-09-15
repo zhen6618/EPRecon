@@ -39,7 +39,7 @@ python tools/tsdf_fusion/generate_gt.py --test --data_path datasets/scannet/ --s
 ```
 For Panoptic Reconstruction:
 ```
-python batch_load_scannet_data.py
-
+python datasets/scannet/batch_load_scannet_data.py
+python datasets/scannet/label_interpolate.py
 ```
 

@@ -25,10 +25,8 @@ mim install mmcv-full
 
 ## Dataset
 
-1. Data Preperation for ScanNet
 Download and extract ScanNet by following the instructions provided at http://www.scan-net.org/.
-
-2. Data preparation script
+Expected directory structure of ScanNet can refer to [NeuralRecon](https://github.com/zju3dv/NeuralRecon)
    
 For Geonetry Reconstruction:
 ```

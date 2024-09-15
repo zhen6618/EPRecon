@@ -53,7 +53,7 @@ python main.py --cfg ./config/test.yaml
 
 ## Generate results for Evaluation
 ```
-python tools/
+python tools/generate_semantic_instance.py
 ```
 
 

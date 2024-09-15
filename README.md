@@ -51,6 +51,9 @@ python main.py --cfg ./config/train.yaml
 python main.py --cfg ./config/test.yaml
 ```
 
-
+## Generate results for Evaluation
+```
+python tools/
+```
 
 

@@ -67,5 +67,5 @@ python tools/generate_semantic_instance.py
       year={2024},
       booktitle={arXiv preprint arXiv:2409.01807},
 }
-
+```
 

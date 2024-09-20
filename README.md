@@ -4,6 +4,10 @@
   <img src="https://github.com/zhen6618/EPRecon/blob/main/demo/demo.gif" alt="Alt Text">
 </p>
 
+<div align=center>
+<img src="https://github.com/zhen6618/EPRecon/blob/main/demo/Overview.png" width="1000px"> 
+</div>
+
 ## Installation
 ```
 conda create -n EPRecon python=3.9

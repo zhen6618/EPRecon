@@ -63,7 +63,7 @@ def download_file(url, out_file):
 
         # urllib.request.urlretrieve(url, out_file_tmp)
         # os.rename(out_file_tmp, out_file)
-        # 改成wget下载
+        # change for wget download
         try:
             subprocess.run(['wget', url, '-o', out_file], check=True)
         except subprocess.CalledProcessError as e:

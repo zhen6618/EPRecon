@@ -32,27 +32,29 @@ mim install mmcv-full
 
 ## Dataset
 
-Download and extract ScanNet by following the instructions provided at http://www.scan-net.org/.
+1. Download and extract ScanNet by following the instructions provided at http://www.scan-net.org/.
 ```
 python datasets/scannet/download_scannet.py
 ```
-Expected directory structure of ScanNet can refer to [NeuralRecon](https://github.com/zju3dv/NeuralRecon)
-
-1. generate depth, color, pose, intrinsics from .sens file (change your file path)
+2. Generate depth, color, pose, intrinsics from .sens file (change your file path)
 ```
 python datasets/scannet/reader.py
 ```
-   
-For Geometry Reconstruction:
+Expected directory structure of ScanNet can refer to [NeuralRecon](https://github.com/zju3dv/NeuralRecon)
+
+3. Extract instance-level semantic labels (change your file path).
+```
+python datasets/scannet/batch_load_scannet_data.py
+```
+4. Label generation for panoptic reconstruction (change your file path):
 ```
 # training/val split
 python tools/tsdf_fusion/generate_gt.py --data_path datasets/scannet/ --save_name all_tsdf_9 --window_size 9
 # test split
 python tools/tsdf_fusion/generate_gt.py --test --data_path datasets/scannet/ --save_name all_tsdf_9 --window_size 9
 ```
-For Panoptic Reconstruction:
+5. Panoptic label interpolation (change your file path):
 ```
-python datasets/scannet/batch_load_scannet_data.py
 python datasets/scannet/label_interpolate.py
 ```
 

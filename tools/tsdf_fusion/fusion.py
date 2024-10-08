@@ -42,9 +42,9 @@ class TSDFVolume:
 
         # Adjust volume bounds and ensure C-order contiguous
         self._vol_dim = np.round((self._vol_bnds[:, 1] - self._vol_bnds[:, 0]) / self._voxel_size).copy(
-            order='C').astype(int)  # _vol_dim: [270, 265, 120] 整个scene
+            order='C').astype(int)  # _vol_dim: [270, 265, 120] 
         self._vol_bnds[:, 1] = self._vol_bnds[:, 0] + self._vol_dim * self._voxel_size
-        self._vol_origin = self._vol_bnds[:, 0].copy(order='C').astype(np.float32)  # origin 整个scene
+        self._vol_origin = self._vol_bnds[:, 0].copy(order='C').astype(np.float32)  # origin 
 
         # Initialize pointers to voxel volume in CPU memory
         self._tsdf_vol_cpu = np.ones(self._vol_dim).astype(np.float32)
@@ -259,9 +259,9 @@ class TSDFVolume:
                                      )
         else:  # CPU mode: integrate voxel volume (vectorized implementation)
             # Convert voxel grid coordinates to pixel coordinates
-            cam_pts = self.vox2world(self._vol_origin, self.vox_coords, self._voxel_size)  # voxel坐标系 to world坐标系
-            cam_pts = rigid_transform(cam_pts, np.linalg.inv(cam_pose))  # world坐标系 to camera坐标系
-            pix_z = cam_pts[:, 2]  # 空间voxel的深度值
+            cam_pts = self.vox2world(self._vol_origin, self.vox_coords, self._voxel_size)  # voxel coord to world coord
+            cam_pts = rigid_transform(cam_pts, np.linalg.inv(cam_pose))  # world coord to camera coord
+            pix_z = cam_pts[:, 2]  # voxel depth
             pix = self.cam2pix(cam_pts, cam_intr)
             pix_x, pix_y = pix[:, 0], pix[:, 1]
 
@@ -272,19 +272,19 @@ class TSDFVolume:
                                                                      np.logical_and(pix_y < im_h,
                                                                                     pix_z > 0))))
             depth_val = np.zeros(pix_x.shape)
-            depth_val[valid_pix] = depth_im[pix_y[valid_pix], pix_x[valid_pix]]  # 获取每个像素点的真实深度值
+            depth_val[valid_pix] = depth_im[pix_y[valid_pix], pix_x[valid_pix]]  # true depth for each pixel
 
-            # Integrate TSDF  (平均加权等等)
-            depth_diff = depth_val - pix_z  # 获取SDF
+            # Integrate TSDF  
+            depth_diff = depth_val - pix_z  # SDF
             valid_pts = np.logical_and(depth_val > 0, depth_diff >= -self._trunc_margin)
-            dist = np.minimum(1, depth_diff / self._trunc_margin)  # 获取TSDF
+            dist = np.minimum(1, depth_diff / self._trunc_margin)  # TSDF
             valid_vox_x = self.vox_coords[valid_pts, 0]
             valid_vox_y = self.vox_coords[valid_pts, 1]
             valid_vox_z = self.vox_coords[valid_pts, 2]
             w_old = self._weight_vol_cpu[valid_vox_x, valid_vox_y, valid_vox_z]
             tsdf_vals = self._tsdf_vol_cpu[valid_vox_x, valid_vox_y, valid_vox_z]
             valid_dist = dist[valid_pts]
-            tsdf_vol_new, w_new = self.integrate_tsdf(tsdf_vals, valid_dist, w_old, obs_weight)  # 加权平均
+            tsdf_vol_new, w_new = self.integrate_tsdf(tsdf_vals, valid_dist, w_old, obs_weight)  # average
             self._weight_vol_cpu[valid_vox_x, valid_vox_y, valid_vox_z] = w_new
             self._tsdf_vol_cpu[valid_vox_x, valid_vox_y, valid_vox_z] = tsdf_vol_new
 
@@ -479,7 +479,7 @@ def integrate(
     w_old = weight_vol[valid_vox_x, valid_vox_y, valid_vox_z]
     tsdf_vals = tsdf_vol[valid_vox_x, valid_vox_y, valid_vox_z]
     w_new = w_old + obs_weight
-    tsdf_vol[valid_vox_x, valid_vox_y, valid_vox_z] = (w_old * tsdf_vals + obs_weight * valid_dist) / w_new  # 加权平均融合
+    tsdf_vol[valid_vox_x, valid_vox_y, valid_vox_z] = (w_old * tsdf_vals + obs_weight * valid_dist) / w_new  # Weighted average fusion
     weight_vol[valid_vox_x, valid_vox_y, valid_vox_z] = w_new
 
     return weight_vol, tsdf_vol

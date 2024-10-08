@@ -33,7 +33,15 @@ mim install mmcv-full
 ## Dataset
 
 Download and extract ScanNet by following the instructions provided at http://www.scan-net.org/.
+```
+python datasets/scannet/download_scannet.py
+```
 Expected directory structure of ScanNet can refer to [NeuralRecon](https://github.com/zju3dv/NeuralRecon)
+
+1. generate depth, color, pose, intrinsics from .sens file (change your file path)
+```
+python datasets/scannet/reader.py
+```
    
 For Geometry Reconstruction:
 ```

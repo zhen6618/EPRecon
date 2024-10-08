@@ -51,15 +51,15 @@ def find_max_count_element(arr):
     """
     arr: [N, 1] class_id or instance_id
     """
-    # 找到具有最多相同元素的元素
+    # Find the element with most common elements
     unique_elements, counts = np.unique(arr, return_counts=True)
     max_count_element = unique_elements[np.argmax(counts)]
 
-    # 如果每个元素都不一样，则随机选择一个元素
+    # If all elements are different, choose one element at random
     if len(unique_elements) == len(arr):
         selected_element = np.random.choice(arr)
     else:
-        # 否则，从具有最多相同元素的元素中随机选择一个
+        # Otherwise, randomly select one from the elements with the most identical elements
         max_count_indices = np.where(arr == max_count_element)[0]
         selected_element = np.random.choice(arr[max_count_indices])
 
@@ -75,42 +75,39 @@ def find_average_count_element(arr):
 
 
 def integrate_semantic(xyz, rgb, semantic_labels, instance_labels, grid_shape):
-    # 确保A, B, C是np.array类型
     xyz, rgb, semantic_labels, instance_labels = np.asarray(xyz), np.asarray(rgb), np.asarray(semantic_labels), np.asarray(instance_labels)
 
-    # 生成一个唯一的一维索引
-    # 假设grid_shape的最大值足够大，可以确保每个索引都是唯一的
+    # Generate a unique one-dimensional index
+    # Assuming the maximum value of grid_shape is large enough, each index is guaranteed to be unique.
     indices = xyz[:, 0] * (grid_shape[1] * grid_shape[2]) + xyz[:, 1] * grid_shape[2] + xyz[:, 2]
 
-    # 对于RGB值，我们计算每个唯一索引对应的平均值
+    # For RGB values, calculate the average value corresponding to each unique index
     rgb_vol = np.zeros(grid_shape + (3,))
-    for i in range(3):  # 对于RGB的每个通道
-        # 使用np.bincount计算加权平均，weights是当前通道的颜色值
+    for i in range(3):  # For each channel of RGB
+        # Use np.bincount to calculate the weighted average, weights is the color value of the current channel
         sums = np.bincount(indices.astype(int), weights=rgb[:, i], minlength=np.prod(grid_shape))
         counts = np.bincount(indices.astype(int), minlength=np.prod(grid_shape))
-        averages = sums / np.maximum(counts, 1)  # 防止除以0
+        averages = sums / np.maximum(counts, 1)  # Prevent division by 0
         rgb_vol[..., i] = averages.reshape(grid_shape)
 
-    # 对于语义标签，我们找出每个位置最常见的标签
-    # 将indices转换为整数
+    # For semantic labels, we find the most common tag at each position
     indices = indices.astype(int)
 
     label_matrix = np.zeros((len(semantic_labels), np.max(semantic_labels) + 1), dtype=int)
-    label_matrix[np.arange(len(semantic_labels)), semantic_labels[:, 0]] = 1  # 使用广播来设置标签的出现
+    label_matrix[np.arange(len(semantic_labels)), semantic_labels[:, 0]] = 1  # Use broadcast to set label appearance
     label_sums = np.zeros((np.prod(grid_shape), np.max(semantic_labels) + 1), dtype=int)
     np.add.at(label_sums, indices, label_matrix)
 
-    # 找到每个格点频次最高的标签
+    # Find the label with the highest frequency at each grid point
     most_frequent_labels = np.argmax(label_sums, axis=1)
     semantic_vol = most_frequent_labels.reshape(grid_shape)
 
     # instance
     instance_matrix = np.zeros((len(instance_labels), np.max(instance_labels) + 1), dtype=int)
-    instance_matrix[np.arange(len(instance_labels)), instance_labels[:, 0]] = 1  # 使用广播来设置标签的出现
+    instance_matrix[np.arange(len(instance_labels)), instance_labels[:, 0]] = 1 
     instance_sums = np.zeros((np.prod(grid_shape), np.max(instance_labels) + 1), dtype=int)
     np.add.at(instance_sums, indices, instance_matrix)
 
-    # 找到每个格点频次最高的标签
     most_frequent_instances = np.argmax(instance_sums, axis=1)
     instance_vol = most_frequent_instances.reshape(grid_shape)
 
@@ -185,11 +182,11 @@ def save_tsdf_full(args, scene_path, cam_intr, depth_list, cam_pose_list, color_
         tsdf_vol, color_vol, weight_vol = tsdf_vol_list[l].get_volume()  # tsdf_vol: [270, 265, 120]
         np.savez_compressed(os.path.join(args.save_path, scene_path, 'full_tsdf_layer{}'.format(str(l))), tsdf_vol)
 
-    '存储每个点的class_id, instance_id'
+    'Store class_id, instance_id for each point'
     if not args.test:
         for l in range(args.num_layers):
             vol_dim = tsdf_vol_list[l].get_vol()
-            semantic_vol = np.zeros(vol_dim, dtype=np.int16)  # 0表示无类别
+            semantic_vol = np.zeros(vol_dim, dtype=np.int16) # 0 means no category
             instance_vol = np.zeros(vol_dim, dtype=np.int16)
             rgb_vol = np.tile(np.zeros(vol_dim, dtype=np.int16)[..., np.newaxis], 3)
 
@@ -200,9 +197,9 @@ def save_tsdf_full(args, scene_path, cam_intr, depth_list, cam_pose_list, color_
 
             coords = mesh_vertices[:, :3]  # [N_voxels, 3] xyz
             coords = np.round((coords - np.tile(vol_bnds[:, 0], (mesh_vertices.shape[0], 1))) / (args.voxel_size * 2 ** l)).astype(int)
-            coords[:, 0] = np.clip(coords[:, 0], 0, vol_dim[0]-1)  # X坐标限制
-            coords[:, 1] = np.clip(coords[:, 1], 0, vol_dim[1]-1)  # Y坐标限制
-            coords[:, 2] = np.clip(coords[:, 2], 0, vol_dim[2]-1)  # Z坐标限制
+            coords[:, 0] = np.clip(coords[:, 0], 0, vol_dim[0]-1)  # X Coordinate restrictions
+            coords[:, 1] = np.clip(coords[:, 1], 0, vol_dim[1]-1)  # Y Coordinate restrictions
+            coords[:, 2] = np.clip(coords[:, 2], 0, vol_dim[2]-1)  # Z Coordinate restrictions
 
             rgb_vol, semantic_vol, instance_vol = integrate_semantic(coords, rgb, semantic_labels.reshape(-1, 1), instance_labels.reshape(-1, 1), (vol_dim[0], vol_dim[1], vol_dim[2]))
             # unique_coords = np.unique(coords, axis=0)
@@ -380,11 +377,11 @@ def generate_pkl(args):
 if __name__ == "__main__":
 
     import os
-    print(os.getcwd())  # 输出当前debug所在的路径，可以指定为工程的主目录路径
+    print(os.getcwd())  
 
     import subprocess
 
-    os.environ['PATH'] += ':/usr/local/cuda/bin'  # CUDA 安装的实际路径
+    os.environ['PATH'] += ':/usr/local/cuda/bin' 
 
     result = subprocess.run(['nvcc', '--version'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     if result.returncode == 0:
@@ -413,7 +410,7 @@ if __name__ == "__main__":
 
     # results = ray.get(ray_worker_ids)
 
-    '不用分布式'
+    'No distributed'
     results = process_with_single_worker(args, files[0])
 
     if args.dataset == 'scannet':

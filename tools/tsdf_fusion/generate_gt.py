@@ -73,7 +73,7 @@ def find_average_count_element(arr):
 
     return arr
 
-
+# Convert the RGB, semantic, and instance represented by the point cloud into voxel by taking the average.
 def integrate_semantic(xyz, rgb, semantic_labels, instance_labels, grid_shape):
     xyz, rgb, semantic_labels, instance_labels = np.asarray(xyz), np.asarray(rgb), np.asarray(semantic_labels), np.asarray(instance_labels)
 

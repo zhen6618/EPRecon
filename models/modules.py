@@ -528,7 +528,6 @@ class Panoptic_Feat_Fusion(nn.Module):
     #     feats_fusion = torch.concat([feats_1x, feats_2x, feats_4x], dim=1)
     #     feats_fusion = self.fusion_down(feats_fusion)  
     #
-    #     # 图像特征 transfer 4✖3*3conv->9*9 感受野
     #     feats_fusion = self.post_fusion_1(feats_fusion)
     #     feats_fusion = self.post_fusion_2(feats_fusion)
     #

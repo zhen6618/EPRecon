@@ -75,11 +75,15 @@ python tools/generate_semantic_instance.py
 
 ## Citation
 ```
-@InProceedings{zhou2024epreconefficientframeworkrealtime,
-      title={EPRecon: An Efficient Framework for Real-Time Panoptic 3D Reconstruction from Monocular Video}, 
-      author={Zhen Zhou and Yunkai Ma and Junfeng Fan and Shaolin Zhang and Fengshui Jing and Min Tan},
-      year={2024},
-      booktitle={arXiv preprint arXiv:2409.01807},
+@INPROCEEDINGS{zhou2025EPRecon,
+  author={Zhou, Zhen and Ma, Yunkai and Fan, Junfeng and Zhang, Shaolin and Jing, Fengshui and Tan, Min},
+  booktitle={2025 IEEE International Conference on Robotics and Automation (ICRA)}, 
+  title={EPRecon: An Efficient Framework for Real-Time Panoptic 3D Reconstruction from Monocular Video}, 
+  year={2025},
+  volume={},
+  number={},
+  pages={2026-2033},
 }
+
 ```
 
